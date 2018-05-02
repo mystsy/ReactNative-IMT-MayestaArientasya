@@ -5,7 +5,7 @@ class App extends Component {
 
 constructor(props) {
   super(props);
-  this.state = {weight: '', height: '', bmi: '', diagnose: ''};
+  this.state = {weight: '', height: '', bmi: ''};
   this.compute = this.compute.bind(this);
 }
 
@@ -15,25 +15,28 @@ compute() {
   let height = parseFloat(this.state.height);
 
   this.setState({bmi: weight/Math.pow(height/100, 2)});
-
-  if (this.state.bmi <= 18.5) {
-    this.state.diagnose = 'Berat badan Anda kurang.'
-  }
-  else if (this.state.bmi >= 18.5 && this.state.bmi <= 24.9) {
-    this.state.diagnose = 'Berat badan Anda ideal.'
-  }
-  else if (this.state.bmi >= 25 && this.state.bmi <= 29.9) {
-    this.state.diagnose = 'Berat badan Anda berlebih.'
-  }
-  else if (this.state.bmi >= 30 && this.state.bmi <= 39.9) {
-    this.state.diagnose = 'Berat badan Anda sangat berlebih.'
-  }
-  else if (this.state.bmi > 39.9) {
-    this.state.diagnose = 'Anda obesitas.'
-  }
 }
   
 render() {
+
+  var diagnose;
+  switch(true) {
+    case (this.state.bmi < 18.5):
+      diagnose = 'Berat badan Anda kurang';
+      break;
+    case (this.state.bmi >= 18.5 && this.state.bmi <= 24.9):
+      diagnose = 'Berat badan Anda ideal';
+      break;
+    case (this.state.bmi >= 25.0 && this.state.bmi <= 29.9):
+      diagnose = 'Berat badan Anda berlebih';
+      break;
+    case (this.state.bmi >= 30.0 && this.state.bmi <= 39.9):
+      diagnose = 'Berat badan Anda sangat berlebih';
+      break;
+    case (this.state.bmi >= 39.9):
+      diagnose = 'Anda obesitas';
+      break;
+  }
 
 return (
 <Container>
@@ -68,7 +71,7 @@ return (
       Indeks Massa Tubuh:{'\n'}
       {this.state.bmi}{'\n'}{'\n'}
       Diagnosa:{'\n'}
-      {this.state.diagnose}
+      {diagnose}
     </Text>
 
   </Content>
